@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="FlexiumMobile:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FlexiumMobile_jar</output-path>
+    <root id="archive" name="FlexiumMobile.jar">
+      <element id="module-output" name="FlexiumMobile" />
+    </root>
+  </artifact>
+</component>

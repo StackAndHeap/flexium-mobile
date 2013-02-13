@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DemoAirApp/DemoAirApp.iml" filepath="$PROJECT_DIR$/DemoAirApp/DemoAirApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DemoAirAppTestsuite/DemoAirAppTestsuite.iml" filepath="$PROJECT_DIR$/DemoAirAppTestsuite/DemoAirAppTestsuite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlexiumMobileAirLib/FlexiumMobileAirLib.iml" filepath="$PROJECT_DIR$/FlexiumMobileAirLib/FlexiumMobileAirLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlexiumMobileJavaLib/FlexiumMobileJavaLib.iml" filepath="$PROJECT_DIR$/FlexiumMobileJavaLib/FlexiumMobileJavaLib.iml" />
+    </modules>
+  </component>
+</project>
+
