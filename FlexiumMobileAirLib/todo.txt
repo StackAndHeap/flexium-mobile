@@ -1,2 +1,0 @@
-- config-file loaden vooraleer met de server verbinding te maken (production Boolean & port & serverhost)
-- socket errors opvangen in testApp
