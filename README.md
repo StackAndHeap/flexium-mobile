@@ -23,6 +23,7 @@ This is very much a work-in-progress so please don't yell at me (yet)
 * Add a depency to the jar 
 
 ####3. Write your first test
+note: I used the jUnit test library [Download](https://github.com/junit-team/junit/wiki/Download-and-Install) but you can ofcourse use any other library
 ```
 import be.stackandheap.flexiummobile.FlexiumMobile;
 import org.junit.*;
