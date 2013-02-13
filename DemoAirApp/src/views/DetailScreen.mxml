@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
-<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
-       >
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
 
-    <s:actionContent></s:actionContent>
-    <s:titleContent><s:Label>{data.titel}</s:Label></s:titleContent>
+    <s:titleContent><s:Label>{titel}</s:Label></s:titleContent>
     <s:navigationContent><s:Button label="back" click="button1_clickHandler(event)" /></s:navigationContent>
     <s:layout><s:VerticalLayout></s:VerticalLayout></s:layout>
 
     <fx:Script><![CDATA[
+
+        [Bindable(event='dataChange')]
+        private function get titel():String {
+            return data.titel;
+        }
+
         private function button1_clickHandler(event:MouseEvent):void {
                navigator.popView();
         }
