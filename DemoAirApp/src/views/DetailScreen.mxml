@@ -3,7 +3,7 @@
 
     <s:titleContent><s:Label>{titel}</s:Label></s:titleContent>
     <s:navigationContent><s:Button label="back" click="button1_clickHandler(event)" /></s:navigationContent>
-    <s:layout><s:VerticalLayout></s:VerticalLayout></s:layout>
+    <s:layout><s:VerticalLayout/></s:layout>
 
     <fx:Script><![CDATA[
 
