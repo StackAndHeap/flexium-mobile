@@ -15,12 +15,12 @@ This is very much a work-in-progress so please don't yell at me (yet)
 ## 
 ##How it works:
 ####1. Include the FlexiumMobileAirLib.swc in the Air app
-Copy the swc into a folder in your project (eg: 'libs') 
-Add `include-libraries libs/FlexiumMobileAirLib.swc` as a compiler option
+* Copy the swc into a folder in your project (eg: 'libs') 
+* Add `include-libraries libs/FlexiumMobileAirLib.swc` as a compiler option
 
 ####2. Include the FlexiumMobileJavaLib.jar in the Testsuite
-Copy the jar into a folder in your project (eg: 'libs')
-Add a depency to the jar 
+* Copy the jar into a folder in your project (eg: 'libs')
+* Add a depency to the jar 
 
 ####3. Write your first test
 ```
