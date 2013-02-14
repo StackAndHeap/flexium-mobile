@@ -1,46 +1,40 @@
 <?xml version="1.0"?>
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
-       destructionPolicy="never" addedToStage="addedToStageHandler(event)">
+       destructionPolicy="never" add="addHandler(event)">
 
-    <s:layout><s:VerticalLayout></s:VerticalLayout></s:layout>
+    <s:layout><s:VerticalLayout paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/></s:layout>
 
     <s:titleContent><s:Label>Add Posts</s:Label></s:titleContent>
 
     <fx:Script><![CDATA[
         import mx.collections.ArrayCollection;
-
+        import mx.events.FlexEvent;
         import spark.events.IndexChangeEvent;
-        import spark.events.TextOperationEvent;
 
         [Bindable(event='change')]
         private var posts:ArrayCollection = new ArrayCollection();
 
         private function button1_clickHandler(event:MouseEvent):void {
-            posts.addItem({titel: textInput.text});
-            textInput.text = "";
-        }
-
-        private function textInput_changeHandler(event:TextOperationEvent):void {
-            if (event.target.text !== "") {
-                button.enabled = true;
-            } else {
-                button.enabled = false;
-            }
+            navigator.pushView(CreatePostScreen);
         }
 
         private function list_clickHandler(event:IndexChangeEvent):void {
-            navigator.saveViewData();
             navigator.pushView(DetailScreen, list.selectedItem);
         }
 
-        private function addedToStageHandler(event:Event):void {
+        private function addHandler(event:FlexEvent):void {
             list.selectedIndex = -1;
+            var returnVal:Object = navigator.poppedViewReturnedObject;
+            if (returnVal != null) {
+                if (returnVal.object != null) {
+                    if (returnVal.object.hasOwnProperty("post")) {
+                        posts.addItem(returnVal.object.post);
+                    }
+                }
+            }
         }
         ]]></fx:Script>
-    <s:Group width="100%">
-        <s:layout><s:HorizontalLayout/></s:layout>
-        <s:Button enabled="false" id="button"  label="Add" click="button1_clickHandler(event)"/>
-        <s:TextInput height="100%"  width="100%" id="textInput" change="textInput_changeHandler(event)"/>
-    </s:Group>
-    <s:List id="list" dataProvider="{posts}" width="100%" height="100%" labelField="titel" change="list_clickHandler(event)"/>
+
+    <s:List id="list" dataProvider="{posts}" width="100%" height="100%" labelField="title" change="list_clickHandler(event)"/>
+    <s:Button id="addPostButton"  label="Create Post" click="button1_clickHandler(event)" width="100%"/>
 </s:View>

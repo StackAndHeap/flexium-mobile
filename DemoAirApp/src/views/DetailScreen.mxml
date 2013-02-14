@@ -3,17 +3,46 @@
 
     <s:titleContent><s:Label>{titel}</s:Label></s:titleContent>
     <s:navigationContent><s:Button label="back" click="button1_clickHandler(event)" /></s:navigationContent>
-    <s:layout><s:VerticalLayout/></s:layout>
 
     <fx:Script><![CDATA[
 
         [Bindable(event='dataChange')]
         private function get titel():String {
-            return data.titel;
+            return data.title;
+        }
+        [Bindable(event='dataChange')]
+        private function get content():String {
+            return data.content;
+        }
+        [Bindable(event='dataChange')]
+        private function get published():String {
+            return data.publish.toString();
         }
 
         private function button1_clickHandler(event:MouseEvent):void {
                navigator.popView();
         }
         ]]></fx:Script>
+
+
+    <s:layout>
+        <s:ConstraintLayout>
+            <s:constraintColumns>
+                <s:ConstraintColumn id="leftPaddingColumn" width="5"/>
+                <s:ConstraintColumn id="column1" width="100%"/>
+                <s:ConstraintColumn id="rightPaddingColumn" width="5"/>
+            </s:constraintColumns>
+            <s:constraintRows>
+                <s:ConstraintRow id="topPaddingRow" height="10"/>
+                <s:ConstraintRow id="row1" height="50"/>
+                <s:ConstraintRow id="row2" height="100%"/>
+                <s:ConstraintRow id="row3" height="50"/>
+                <s:ConstraintRow id="bottomPaddingRow" height="10"/>
+            </s:constraintRows>
+        </s:ConstraintLayout>
+    </s:layout>
+
+    <s:Label text="Title: {titel}" left="column1:0" right="column1:0" top="row1:10"/>
+    <s:Label text="Content: {content}" left="column1:0" right="column1:0" top="row2:10"/>
+    <s:Label text="Published: {published}" left="column1:0" right="column1:0" top="row3:10"/>
 </s:View>

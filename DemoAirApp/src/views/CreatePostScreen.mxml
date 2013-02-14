@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
+
+    <s:titleContent><s:Label>Create Post</s:Label></s:titleContent>
+    <s:navigationContent><s:Button label="back" id="navButton" click="navButton_clickHandler(event)" /></s:navigationContent>
+
+    <s:layout>
+        <s:ConstraintLayout>
+            <s:constraintColumns>
+                <s:ConstraintColumn id="leftPaddingColumn" width="5"/>
+                <s:ConstraintColumn id="column1" width="100"/>
+                <s:ConstraintColumn id="middleGapColumn" width="3"/>
+                <s:ConstraintColumn id="column2" width="100%"/>
+                <s:ConstraintColumn id="rightPaddingColumn" width="5"/>
+            </s:constraintColumns>
+            <s:constraintRows>
+                <s:ConstraintRow id="topPaddingRow" height="10"/>
+                <s:ConstraintRow id="row1" height="60"/>
+                <s:ConstraintRow id="row2" height="100%"/>
+                <s:ConstraintRow id="row3" height="60"/>
+                <s:ConstraintRow id="row4" height="60"/>
+                <s:ConstraintRow id="bottomPaddingRow" height="10"/>
+            </s:constraintRows>
+        </s:ConstraintLayout>
+    </s:layout>
+
+    <s:Label text="Title" left="column1:0" right="column1:0" top="row1:10" />
+    <s:Label text="Text" left="column1:0" right="column1:0" top="row2:10"/>
+    <s:Label text="Publish" left="column1:0" right="column1:0" top="row3:15"/>
+
+    <s:TextInput id="titleInput" left="column2:0" right="column2:0" top="row1:0" bottom="row1:5"/>
+    <s:TextArea id="contenTextArea" left="column2:0" right="column2:0" top="row2:0" bottom="row2:5"/>
+    <s:ToggleSwitch id="publishToggleSwitch" left="column2:0" top="row3:0" />
+    <s:Button id="submitButton" label="SUBMIT" left="column1:5" right="column2:5" top="row4:0"  bottom="row4:0" click="submitHandler(event)" />
+
+
+    <fx:Script><![CDATA[
+        private var post:Object;
+        private function navButton_clickHandler(event:MouseEvent):void {
+            navigator.popView();
+        }
+        override public function createReturnObject():Object {
+            var returnedObject:Object = new Object();
+            returnedObject.post = this.post;
+            return returnedObject;
+        }
+
+        private function submitHandler(event:MouseEvent):void {
+             post = {
+                title:titleInput.text,
+                content:contenTextArea.text,
+                publish:publishToggleSwitch.selected
+            }
+            navigator.popView();
+        }
+        ]]></fx:Script>
+</s:View>
