@@ -19,10 +19,19 @@ public class AirAppTest {
         Boolean succes = flexiumMobile.testSocketConnection();
         Assert.assertTrue("No app connected with the server",succes);
     }
+
     @Test
     public void testB_AddPost() throws Exception{
-        flexiumMobile.setText("textInput","First Post");
-        flexiumMobile.clickElement("button");
+        flexiumMobile.clickElement("addPostButton");
+        String title = flexiumMobile.getActiveViewTitle();
+        Assert.assertEquals("Create Post view not opened", "Create Post", title);
+
+        flexiumMobile.setText("titleInput","First Post");
+        flexiumMobile.setText("contenTextArea","These are the contents of my first post");
+        flexiumMobile.tabElement("publishToggleSwitch");
+        flexiumMobile.clickElement("submitButton");
+
+
         Boolean succes = flexiumMobile.elementHasItem("list","First Post");
         Assert.assertTrue("Add Post failed, no such post in list",succes);
     }

@@ -17,7 +17,6 @@ public class FlexMobileAirLib extends Sprite {
 
     public function FlexMobileAirLib(app:Object) {
         super();
-        trace("test");
         app.addEventListener(FlexEvent.APPLICATION_COMPLETE, applicationCompleteHandler);
     }
 

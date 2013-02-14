@@ -14,7 +14,6 @@ public class ComponentAction extends AbstractAction implements IAction {
     public function attachActions():void {
         attach("isVisible",isVisible);
         attach("hasItem",hasItem);
-        attach("getCurrentViewTitle",getCurrentViewTitle);
     }
 
     public function isVisible(id:String):String {
@@ -44,22 +43,6 @@ public class ComponentAction extends AbstractAction implements IAction {
             }
         }
         return "false";
-    }
-
-    public function getCurrentViewTitle(id:String, args:String):String{
-        try{
-            var titleObject:Object = parser.thisApp['navigator'].activeView.titleContent[0];
-            if(titleObject.hasOwnProperty("text")){
-                  return titleObject.text;
-            }
-            if(titleObject.hasOwnProperty("label")){
-                return titleObject.label;
-            }
-            return titleObject.toString();
-        }catch(e:Error){
-            return "No title-object found in currentview";
-        }
-        return null;
     }
 }
 }

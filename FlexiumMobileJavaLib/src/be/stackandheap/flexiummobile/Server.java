@@ -7,8 +7,15 @@ public class Server {
     private static ServerSocket serverSocket;
     private static Connection connection;
     private static Socket client;
+    private int pause = 0;
 
     public Server() {
+    }
+    public int getPause() {
+        return pause;
+    }
+    public void setPause(int pause) {
+        this.pause = pause;
     }
     public void start(int port) throws Exception{
         try{
@@ -24,12 +31,14 @@ public class Server {
 
     }
     public String call(String functionName,String args) throws Exception{
-        connection.sendMessage(functionName + ":" + args);
+        Thread.sleep(getPause());
+        String msg;
+        msg = (args == null) ? functionName:functionName + ":" + args;
+        connection.sendMessage(msg);
         return connection.in.readLine();
     }
-    public String call(String functionName,String args,int pause) throws Exception{
-        Thread.sleep(pause);
-        return call(functionName,args);
+    public String call(String functionName) throws Exception{
+        return call(functionName,null);
     }
     public void close() throws Exception{
         serverSocket.close();
