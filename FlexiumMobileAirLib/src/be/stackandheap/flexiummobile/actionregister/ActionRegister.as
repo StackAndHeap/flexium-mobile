@@ -6,15 +6,22 @@ public class ActionRegister {
         actions[actionName] = callBack;
     }
     public static function call(actionName:String,args:String=null):String{
-        var id:String = null;
-        var otherArgs:String = null;
-        if(args){
-            var arguments:Array = args.split(",");
-            id = arguments[0];
-            otherArgs = arguments[1];
-        }
         if(actions[actionName]){
-            return actions[actionName](id,otherArgs);
+            var id:String = null;
+            var otherArgs:String = null;
+            var arguments:Array = null;
+            if(args){
+                arguments =  args.split(",");
+                id = arguments[0];
+                otherArgs = arguments[1];
+            }
+            if(!arguments)
+                return actions[actionName]();
+            if(arguments.length == 1)
+                return actions[actionName](id);
+            if(arguments.length > 1)
+                return actions[actionName](id,otherArgs);
+
         }
         return "action failed";
     }
