@@ -5,10 +5,31 @@
         width="100%" height="100%" creationComplete="creationCompleteHandler(event)">
     <fx:Script><![CDATA[
         import be.stackandheap.flexiummobile.FlexMobileAirLib;
+
         import mx.events.FlexEvent;
 
         private function creationCompleteHandler(event:FlexEvent):void {
+            // initialize test tool
             FlexMobileAirLib.init(this.getChildAt(0));
+
+            // create gesture listeners
+            this.addEventListener(TransformGestureEvent.GESTURE_PAN, gesturePanHandler);
+            this.addEventListener(TransformGestureEvent.GESTURE_ROTATE, gestureRotateHandler);
+            this.addEventListener(TransformGestureEvent.GESTURE_SWIPE, gestureSwipeHandler);
+            this.addEventListener(TransformGestureEvent.GESTURE_ZOOM, gestureZoomHandler);
+        }
+
+        private function gesturePanHandler(event:TransformGestureEvent):void {
+             trace(event);
+        }
+        private function gestureRotateHandler(event:TransformGestureEvent):void {
+            trace(event);
+        }
+        private function gestureSwipeHandler(event:TransformGestureEvent):void {
+            trace(event);
+        }
+        private function gestureZoomHandler(event:TransformGestureEvent):void {
+            trace(event);
         }
         ]]></fx:Script>
 </s:ViewNavigatorApplication>

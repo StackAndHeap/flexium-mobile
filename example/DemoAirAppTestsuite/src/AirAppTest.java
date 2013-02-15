@@ -10,7 +10,7 @@ public class AirAppTest {
     @BeforeClass
     public static void setUp() throws Exception{
             flexiumMobile = new FlexiumMobile();
-            flexiumMobile.setPause(500);
+            flexiumMobile.setPause(500); //time between calls, optional
             flexiumMobile.start(4444);
     }
 
@@ -18,6 +18,13 @@ public class AirAppTest {
     public void testA_Connection() throws Exception{
         Boolean succes = flexiumMobile.testSocketConnection();
         Assert.assertTrue("No app connected with the server",succes);
+
+        flexiumMobile.swipe("up");
+        flexiumMobile.swipe("left");
+        flexiumMobile.pan("down");
+        flexiumMobile.pan("right");
+        flexiumMobile.rotate(90);
+        flexiumMobile.zoom(0.5);
     }
 
     @Test
