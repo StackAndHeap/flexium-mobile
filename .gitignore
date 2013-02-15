@@ -19,7 +19,6 @@ tmp/
 *~.nib
 local.properties
 .classpath
-sql/
 
 # Windows image file caches
 Thumbs.db
