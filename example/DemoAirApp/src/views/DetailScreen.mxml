@@ -2,7 +2,7 @@
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
 
     <s:titleContent><s:Label>{titel}</s:Label></s:titleContent>
-    <s:navigationContent><s:Button label="back" click="button1_clickHandler(event)" /></s:navigationContent>
+    <s:navigationContent><s:Button id="backButton" label="back" click="button1_clickHandler(event)" /></s:navigationContent>
 
     <fx:Script><![CDATA[
 

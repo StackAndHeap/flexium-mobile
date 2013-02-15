@@ -3,7 +3,7 @@
         xmlns:components="components.*">
 
     <s:titleContent><s:Label>Create Post</s:Label></s:titleContent>
-    <s:navigationContent><s:Button label="back" id="navButton" click="navButton_clickHandler(event)" /></s:navigationContent>
+    <s:navigationContent><s:Button id="backButton" label="back" click="navButton_clickHandler(event)" /></s:navigationContent>
 
     <s:layout>
         <s:ConstraintLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" creationComplete="addedToStageHandler(event)">
+
+    <s:titleContent><s:Label>Gesture Test</s:Label></s:titleContent>
+    <s:navigationContent><s:Button label="back" id="backButton" click="navButton_clickHandler(event)" /></s:navigationContent>
+
+    <fx:Script><![CDATA[
+        private var post:Object;
+        var mySprite:Sprite;
+
+        private function navButton_clickHandler(event:MouseEvent):void {
+            navigator.popView();
+        }
+
+        private function addedToStageHandler(event:Event):void {
+            Multitouch.inputMode=MultitouchInputMode.GESTURE;
+
+            mySprite = new Sprite();
+            mySprite.name = "mySprite";
+            mySprite.graphics.beginFill(0x336699);
+            mySprite.graphics.drawRect(100,100,50,50);
+            drawField.addChild(mySprite);
+
+            mySprite.addEventListener(TransformGestureEvent.GESTURE_PAN, gesturePanHandler);
+            mySprite.addEventListener(TransformGestureEvent.GESTURE_ROTATE, gestureRotateHandler);
+            mySprite.addEventListener(TransformGestureEvent.GESTURE_SWIPE, gestureSwipeHandler);
+            mySprite.addEventListener(TransformGestureEvent.GESTURE_ZOOM, gestureZoomHandler);
+        }
+        private function gesturePanHandler(event:TransformGestureEvent):void {
+            if(event.offsetX != 0)
+                mySprite.x -= 75 * event.offsetX;
+            if(event.offsetY != 0)
+                mySprite.y -= 75 * event.offsetY;
+        }
+        private function gestureRotateHandler(event:TransformGestureEvent):void {
+            mySprite.rotation = event.rotation;
+        }
+        private function gestureSwipeHandler(event:TransformGestureEvent):void {
+            if(event.offsetX != 0)
+                mySprite.x += 75 * event.offsetX;
+            if(event.offsetY != 0)
+                mySprite.y += 75 * event.offsetY;
+        }
+        private function gestureZoomHandler(event:TransformGestureEvent):void {
+            mySprite.scaleX = mySprite.scaleY = event.scaleX;
+        }
+        ]]></fx:Script>
+    <s:SpriteVisualElement id="drawField" width="500" height="300"/>
+</s:View>

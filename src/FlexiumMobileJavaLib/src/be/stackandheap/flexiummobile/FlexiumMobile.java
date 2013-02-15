@@ -39,16 +39,20 @@ public class FlexiumMobile extends Server {
         String hasItemReturn =  call("selectElement",args);
         return hasItemReturn.equals(selected);
     }
-    public void swipe(String toDirection) throws Exception{
-        call("doSwipeGesture",toDirection);
+    public void swipe(String elementId,String toDirection) throws Exception{
+        String args =  elementId +","+toDirection;
+        call("doSwipeGesture",args);
     }
-    public void pan(String toDirection) throws Exception{
-        call("doPanGesture",toDirection);
+    public void pan(String elementId,String toDirection) throws Exception{
+        String args =  elementId +","+toDirection;
+        call("doPanGesture",args);
     }
-    public void rotate(Number degrees) throws Exception{
-        call("doRotateGesture",degrees.toString());
+    public void rotate(String elementId,Number degrees) throws Exception{
+        String args =  elementId +","+degrees.toString();
+        call("doRotateGesture",args);
     }
-    public void zoom(Number zoomPercentage) throws Exception{
-        call("doZoomGesture",zoomPercentage.toString());
+    public void zoom(String elementId,Number zoomPercentage) throws Exception{
+        String args =  elementId +","+zoomPercentage.toString();
+        call("doZoomGesture",args);
     }
 }

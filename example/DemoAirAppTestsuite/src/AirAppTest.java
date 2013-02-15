@@ -18,13 +18,6 @@ public class AirAppTest {
     public void testA_Connection() throws Exception{
         Boolean succes = flexiumMobile.testSocketConnection();
         Assert.assertTrue("No app connected with the server",succes);
-
-        flexiumMobile.swipe("up");
-        flexiumMobile.swipe("left");
-        flexiumMobile.pan("down");
-        flexiumMobile.pan("right");
-        flexiumMobile.rotate(90);
-        flexiumMobile.zoom(0.5);
     }
 
     @Test
@@ -45,7 +38,19 @@ public class AirAppTest {
     public void testC_DetailViewPost() throws Exception{
         flexiumMobile.clickItemInElement("list","First Post");
         String title = flexiumMobile.getActiveViewTitle();
+        flexiumMobile.clickElement("backButton");
         Assert.assertEquals("Wrong title on Active window", "First Post", title);
+
+    }
+    @Test
+    public void testD_Gestures() throws Exception{
+        flexiumMobile.tapElement("gestureButton");
+        flexiumMobile.zoom("mySprite",3);
+        flexiumMobile.rotate("mySprite",45);
+        flexiumMobile.pan("mySprite","up");
+        flexiumMobile.pan("mySprite","left");
+        flexiumMobile.swipe("mySprite","down");
+        flexiumMobile.swipe("mySprite","right");
     }
 
     @AfterClass

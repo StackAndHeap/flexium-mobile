@@ -43,12 +43,20 @@ public class TouchAction extends AbstractAction implements IAction {
                     new PressAndTapGestureEvent(PressAndTapGestureEvent.GESTURE_PRESS_AND_TAP)));
     }
 
-    public function doZoomGesture(zoomPercentage:Number):String{
+    public function doZoomGesture(elementId:String, zoomPercentage:Number):String{
+        var child:Object = parser.getElement(elementId);
+        if (child == null) {
+            return Errors.OBJECT_NOT_FOUND;
+        }
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_ZOOM);
         e.scaleX = e.scaleY = zoomPercentage;
-        return String(parser.thisApp.dispatchEvent(e));
+        return String(child.dispatchEvent(e));
     }
-    public function doPanGesture(toDirection:String):String{
+    public function doPanGesture(elementId:String, toDirection:String):String{
+        var child:Object = parser.getElement(elementId);
+        if (child == null) {
+            return Errors.OBJECT_NOT_FOUND;
+        }
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_PAN);
         switch(toDirection.toUpperCase()){
             case "UP":
@@ -68,14 +76,22 @@ public class TouchAction extends AbstractAction implements IAction {
                 break;
 
         }
-        return String(parser.thisApp.dispatchEvent(e));
+        return String(child.dispatchEvent(e));
     }
-    public function doRotateGesture(rotation:Number):String{
+    public function doRotateGesture(elementId:String, rotation:Number):String{
+        var child:Object = parser.getElement(elementId);
+        if (child == null) {
+            return Errors.OBJECT_NOT_FOUND;
+        }
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_ROTATE);
         e.rotation = rotation;
-        return String(parser.thisApp.dispatchEvent(e));
+        return String(child.dispatchEvent(e));
     }
-    public function doSwipeGesture(toDirection:String):String{
+    public function doSwipeGesture(elementId:String, toDirection:String):String{
+        var child:Object = parser.getElement(elementId);
+        if (child == null) {
+            return Errors.OBJECT_NOT_FOUND;
+        }
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_SWIPE);
         switch(toDirection.toUpperCase()){
             case "UP":
@@ -95,7 +111,7 @@ public class TouchAction extends AbstractAction implements IAction {
                 break;
 
         }
-        return String(parser.thisApp.dispatchEvent(e));
+        return String(child.dispatchEvent(e));
     }
 
 }
