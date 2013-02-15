@@ -6,7 +6,7 @@
 
     <fx:Script><![CDATA[
         private var post:Object;
-        var mySprite:Sprite;
+        private var mySprite:Sprite;
 
         private function navButton_clickHandler(event:MouseEvent):void {
             navigator.popView();
