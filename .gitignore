@@ -1,15 +1,9 @@
-#################
-## IntelliJ
-#################
+## IntelliJ ##
 *.iml
 .idea/
 out/
 
-
-#################
-## Other
-#################
-
+## Other ##
 .project
 .metadata
 tmp/
