@@ -1,0 +1,1 @@
+- communicatie tussen client & server met json-strings ipv strings van het type: "id:agr1,arg2,..."
