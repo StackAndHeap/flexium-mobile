@@ -9,11 +9,11 @@ import mx.events.FlexEvent;
 
 [Mixin]
 public class FlexMobileAirLib extends Sprite {
-    private static var airtester:FlexMobileAirLib;
+    public static var airtester:FlexMobileAirLib;
     public static var application:Object;
     public var appParser:AppParser;
-    private var actions:Actions;
-    private var socketConnection:SocketConnection;
+    public var actions:Actions;
+    public var socketConnection:SocketConnection;
 
     public function FlexMobileAirLib(app:Object) {
         super();
