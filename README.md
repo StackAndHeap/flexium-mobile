@@ -7,10 +7,10 @@ but we deceided it would be more clearly if we moved it to a new project.
 This is very much a work-in-progress so please don't yell at me (yet)
 
 ##Contents:
-* **DemoAirApp** - A very basic Air app, which we will use to run tests on	
-* **DemoAirAppTestsuite** - An example of a testsuite (written in Java), which tests the DemoAirApp 
-* **FlexiumMobileAirLib** - The source for FlexiumMobileAirLib.swc, which we include in the Air app
-* **FlexiumMobileJavaLib** - The source for FlexiumMobileJavaLib.jar, which is included in the testsuite
+* **example/DemoAirApp** - A very basic Air app, which we will use to run tests on	
+* **example/DemoAirAppTestsuite** - An example of a testsuite (written in Java), which tests the DemoAirApp 
+* **src/FlexiumMobileAirLib** - The source for FlexiumMobileAirLib.swc, which we include in the Air app
+* **src/FlexiumMobileJavaLib** - The source for FlexiumMobileJavaLib.jar, which is included in the testsuite
 
 ## 
 ##How it works:
