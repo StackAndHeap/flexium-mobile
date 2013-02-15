@@ -1,7 +1,7 @@
 #Flexium Mobile
 
 Flexium Mobile is a toolset for testing your Air Mobile apps.
-This project has started as an extension for the Flexium project (https://github.com/gert789/flexium)
+This project has started as an extension for the Flexium project (https://github.com/StackAndHeap/flexium)
 but we deceided it would be more clearly if we moved it to a new project.
 
 This is very much a work-in-progress so please don't yell at me (yet)
