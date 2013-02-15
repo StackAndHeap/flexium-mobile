@@ -25,16 +25,11 @@
         </s:ConstraintLayout>
     </s:layout>
 
-    <!--<s:Label text="Title" left="column1:0" right="column1:0" top="row1:10" />-->
-    <!--<s:Label text="Text" left="column1:0" right="column1:0" top="row2:10"/>-->
     <s:Label text="Publish" left="column1:0" right="column1:0" top="row3:15"/>
-
-    <!--<s:TextInput id="titleInput" left="column2:0" right="column2:0" top="row1:0" bottom="row1:5"/>-->
     <components:PlaceholderTextInput id="titleInput" placeHolder="title" left="column1:0" right="column2:0" top="row1:0" bottom="row1:5"/>
     <components:PlaceholderTextArea id="contenTextArea" placeHolder="content" left="column1:0" right="column2:0" top="row2:0" bottom="row2:5"/>
     <s:ToggleSwitch id="publishToggleSwitch" left="column2:0" top="row3:0" change="publishToggleSwitch_changeHandler(event)" />
     <s:Button id="submitButton" label="SUBMIT" left="column1:5" right="column2:5" top="row4:0"  bottom="row4:0" click="submitHandler(event)" />
-
 
     <fx:Script><![CDATA[
         private var post:Object;
@@ -44,9 +39,12 @@
         }
 
         override public function createReturnObject():Object {
-            var returnedObject:Object = new Object();
-            returnedObject.post = this.post;
-            return returnedObject;
+            if(titleInput.text != ""){
+                var returnedObject:Object = new Object();
+                returnedObject.post = this.post;
+                return returnedObject;
+            }
+            return null;
         }
 
         private function submitHandler(event:MouseEvent):void {

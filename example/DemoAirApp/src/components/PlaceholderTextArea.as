@@ -36,7 +36,12 @@ public class PlaceholderTextArea extends TextArea{
         }
         super.focusOutHandler(event);
     }
+    override public function get text():String{
+        if(textDisplay.text == placeHolder)
+            textDisplay.text = "";
 
+        return super.text;
+    }
     private function setInputTextStyle(fontStyle:String, color:String):void {
         this.setStyle('fontStyle',fontStyle);
         this.setStyle('color',color);
