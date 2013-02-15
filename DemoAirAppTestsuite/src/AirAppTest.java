@@ -22,15 +22,14 @@ public class AirAppTest {
 
     @Test
     public void testB_AddPost() throws Exception{
-        flexiumMobile.clickElement("addPostButton");
+        flexiumMobile.tapElement("addPostButton");
         String title = flexiumMobile.getActiveViewTitle();
         Assert.assertEquals("Create Post view not opened", "Create Post", title);
 
         flexiumMobile.setText("titleInput","First Post");
         flexiumMobile.setText("contenTextArea","These are the contents of my first post");
-        flexiumMobile.tabElement("publishToggleSwitch");
+        flexiumMobile.selectElement("publishToggleSwitch","true");
         flexiumMobile.clickElement("submitButton");
-
 
         Boolean succes = flexiumMobile.elementHasItem("list","First Post");
         Assert.assertTrue("Add Post failed, no such post in list",succes);

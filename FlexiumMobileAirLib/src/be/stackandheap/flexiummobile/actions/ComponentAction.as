@@ -1,9 +1,7 @@
 package be.stackandheap.flexiummobile.actions {
 import be.stackandheap.flexiummobile.parser.AppParser;
-import be.stackandheap.flexiummobile.utils.Errors;
-import be.stackandheap.flexiummobile.utils.References;
-import be.stackandheap.flexiummobile.utils.Utils;
-
+import be.stackandheap.flexiummobile.utils.*;
+import flash.events.Event;
 import spark.components.List;
 
 public class ComponentAction extends AbstractAction implements IAction {
@@ -14,6 +12,7 @@ public class ComponentAction extends AbstractAction implements IAction {
     public function attachActions():void {
         attach("isVisible",isVisible);
         attach("hasItem",hasItem);
+        attach("selectElement",selectElement);
     }
 
     public function isVisible(id:String):String {
@@ -35,7 +34,6 @@ public class ComponentAction extends AbstractAction implements IAction {
         }
         return Errors.OBJECT_NOT_COMPATIBLE;
     }
-
     private function sparkListHasItem(list:List, label:String):String {
         for each (var item:Object in list.dataProvider) {
             if (list.itemToLabel(item) == label) {
@@ -43,6 +41,20 @@ public class ComponentAction extends AbstractAction implements IAction {
             }
         }
         return "false";
+    }
+    public function selectElement(elementId:String, selected:String):String{
+        var child:Object = parser.getElement(elementId);
+        if(child) {
+            if(child.hasOwnProperty("selected")) {
+                child.selected = selected=='true';
+                child.dispatchEvent(new Event(Event.CHANGE));
+                return child.selected;
+            } else {
+                return Errors.PROPERTY_DOESNT_EXIST;
+            }
+        } else {
+            return Errors.OBJECT_NOT_FOUND;
+        }
     }
 }
 }

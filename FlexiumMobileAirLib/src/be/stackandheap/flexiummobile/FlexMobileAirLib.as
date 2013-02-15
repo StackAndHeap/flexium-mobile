@@ -37,7 +37,7 @@ public class FlexMobileAirLib extends Sprite {
     }
 
     private function connectToServer():void {
-        socketConnection = new SocketConnection("localhost",  4444);
+        socketConnection = new SocketConnection("10.1.179.201",  4444);
         socketConnection.addEventListener(SocketEvent.CONNECTED, socketConnectHandler);
         socketConnection.addEventListener(SocketEvent.RECEIVED_DATA, socketDataReceivedHandler);
         socketConnection.addEventListener(SocketEvent.CLOSED, socketClosedHandler);

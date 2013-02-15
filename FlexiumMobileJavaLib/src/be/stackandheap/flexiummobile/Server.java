@@ -28,7 +28,6 @@ public class Server {
         }catch (Exception e){
              throw new Exception("connection failed ",e);
         }
-
     }
     public String call(String functionName,String args) throws Exception{
         Thread.sleep(getPause());

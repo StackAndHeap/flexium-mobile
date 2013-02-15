@@ -14,8 +14,8 @@ public class TouchAction extends AbstractAction implements IAction {
     }
 
     public function attachActions():void {
-        attach("doTab", doTap);
-        attach("doPressAndTab", doPressAndTab);
+        attach("doTap", doTap);
+        attach("doPressAndTap", doPressAndTap);
     }
 
     public function doTap(elementId:String, args:String=null):String {
@@ -32,7 +32,7 @@ public class TouchAction extends AbstractAction implements IAction {
         return Errors.OBJECT_NOT_COMPATIBLE;
     }
 
-    public function doPressAndTab():String{
+    public function doPressAndTap():String{
             return String(parser.thisApp.dispatchEvent(
                     new PressAndTapGestureEvent(PressAndTapGestureEvent.GESTURE_PRESS_AND_TAP)));
     }

@@ -28,10 +28,15 @@ public class FlexiumMobile extends Server {
         String hasItemReturn =  call("hasItem",args);
         return hasItemReturn.equals("true");
     }
-    public String tabElement(String elementId) throws Exception{
-        return call("doTab",elementId);
+    public String tapElement(String elementId) throws Exception{
+        return call("doTap",elementId);
     }
     public void openContextMenu() throws Exception{
-        call("doPressAndTab");
+        call("doPressAndTap");
+    }
+    public Boolean selectElement(String elementId,String selected) throws Exception{
+        String args =  elementId +","+selected;
+        String hasItemReturn =  call("selectElement",args);
+        return hasItemReturn.equals(selected);
     }
 }
