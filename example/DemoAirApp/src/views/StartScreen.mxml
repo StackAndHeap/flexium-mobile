@@ -41,5 +41,5 @@
         ]]></fx:Script>
 
     <s:List id="list" dataProvider="{posts}" width="100%" height="100%" labelField="title" change="list_clickHandler(event)"/>
-    <s:Button id="addPostButton"  label="Create Post" touchTap="button1_tapHandler(event)" click="button1_clickHandler(event)" width="100%"/>
+    <s:Button id="addPostButton"  label="Create new post" touchTap="button1_tapHandler(event)" click="button1_clickHandler(event)" width="100%"/>
 </s:View>
