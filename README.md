@@ -1,7 +1,7 @@
 #Flexium Mobile
 
-Flexium Mobile is a toolset for testing your Air Mobile apps.
-This project has started as an extension for the Flexium project (https://github.com/gert789/flexium)
+Flexium Mobile is a toolset for creating automated tests for your Air Mobile apps.
+This project has started as an extension for the Flexium project (https://github.com/StackAndHeap/flexium)
 but we deceided it would be more clearly if we moved it to a new project.
 
 This is very much a work-in-progress so please don't yell at me (yet)
@@ -16,11 +16,14 @@ This is very much a work-in-progress so please don't yell at me (yet)
 ##How it works:
 ####1. Include the bin/FlexiumMobileAirLib.swc in the Air app
 * Copy the swc into a folder in your project (eg: 'libs') 
-* Add `include-libraries libs/FlexiumMobileAirLib.swc` as a compiler option
+* Add `-include-libraries libs/FlexiumMobileAirLib.swc` as a compiler option
 
 ####2. Include the bin/FlexiumMobileJavaLib.jar in the Testsuite
 * Copy the jar into a folder in your project (eg: 'libs')
-* Add a depency to the jar 
+* Add a depency to the jar
+
+Note: If you want to run the test on your mobile phone, make sure that it is connected to the same network as your computer
+
 
 ####3. Write your first test
 note: I used the jUnit test library ([Download](https://github.com/junit-team/junit/wiki/Download-and-Install))
