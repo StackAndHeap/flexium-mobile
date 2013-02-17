@@ -20,7 +20,10 @@ This is very much a work-in-progress so please don't yell at me (yet)
 
 ####2. Include the bin/FlexiumMobileJavaLib.jar in the Testsuite
 * Copy the jar into a folder in your project (eg: 'libs')
-* Add a depency to the jar 
+* Add a depency to the jar
+
+Note: If you want to run the test on your mobile phone, make sure that it is connected to the same network as your computer
+
 
 ####3. Write your first test
 note: I used the jUnit test library ([Download](https://github.com/junit-team/junit/wiki/Download-and-Install))
