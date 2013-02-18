@@ -1,43 +1,47 @@
 package be.stackandheap.flexiummobile;
 
+
+import org.json.simple.JSONObject;
+
 public class FlexiumMobile extends Server {
 
     public FlexiumMobile(){
     }
 
-    public String clickElement(String elementId) throws Exception{
-        return call("doFlexClick",elementId);
+    public void clickElement(String elementId) throws Exception{
+        JSONObject jsonObject = call("doFlexClick",elementId);
+
     }
-    public String clickItemInElement(String elementId,String itemLabel) throws Exception{
+    public void clickItemInElement(String elementId,String itemLabel) throws Exception{
         String args =  elementId +","+itemLabel;
-        return call("doFlexClick",args);
+        JSONObject jsonObject = call("doFlexClick",args);
     }
-    public String setText(String elementId,String value) throws Exception{
+    public void setText(String elementId,String value) throws Exception{
         String args =  elementId +","+value;
-        return call("doFlexType",args);
+        JSONObject jsonObject = call("doFlexType",args);
     }
     public String getActiveViewTitle() throws Exception{
-        return call("getCurrentViewTitle");
+        JSONObject jsonObject = call("getCurrentViewTitle");
+        return ""+jsonObject.get("message");
     }
     public Boolean testSocketConnection() throws Exception{
-        String handshakeReturn =  call("doHandshake");
-        return handshakeReturn.equals("Hello!");
+        JSONObject handshakeReturn =  call("doHandshake");
+        return handshakeReturn.get("message").equals("Hello!");
     }
     public Boolean elementHasItem(String elementId,String itemLabel) throws Exception{
         String args =  elementId +","+itemLabel;
-        String hasItemReturn =  call("hasItem",args);
-        return hasItemReturn.equals("true");
+        JSONObject jsonObject =  call("hasItem",args);
+        return (Boolean) jsonObject.get("succes");
     }
-    public String tapElement(String elementId) throws Exception{
-        return call("doTap",elementId);
+    public void tapElement(String elementId) throws Exception{
+        JSONObject jsonObject = call("doTap",elementId);
     }
     public void openContextMenu() throws Exception{
         call("doPressAndTap");
     }
-    public Boolean selectElement(String elementId,String selected) throws Exception{
+    public void selectElement(String elementId,String selected) throws Exception{
         String args =  elementId +","+selected;
-        String hasItemReturn =  call("selectElement",args);
-        return hasItemReturn.equals(selected);
+        JSONObject jsonObject =   call("selectElement",args);
     }
     public void swipe(String elementId,String toDirection) throws Exception{
         String args =  elementId +","+toDirection;
