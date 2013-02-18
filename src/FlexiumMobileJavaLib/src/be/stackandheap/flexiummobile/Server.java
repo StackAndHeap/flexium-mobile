@@ -1,5 +1,8 @@
 package be.stackandheap.flexiummobile;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -29,14 +32,23 @@ public class Server {
              throw new Exception("connection failed ",e);
         }
     }
-    public String call(String functionName,String args) throws Exception{
+    public JSONObject call(String functionName,String args) throws Exception{
         Thread.sleep(getPause());
         String msg;
         msg = (args == null) ? functionName:functionName + ":" + args;
         connection.sendMessage(msg);
-        return connection.in.readLine();
+
+        String returnVal = connection.in.readLine();
+        JSONObject jsonObject = (JSONObject)new JSONParser().parse(returnVal);
+        System.out.println(jsonObject.get("succes"));
+        System.out.println(jsonObject.get("id"));
+
+        if((Boolean)jsonObject.get("succes") == false){
+            throw new Exception("Action failed: "+jsonObject.get("message"));
+        }
+        return jsonObject;
     }
-    public String call(String functionName) throws Exception{
+    public JSONObject call(String functionName) throws Exception{
         return call(functionName,null);
     }
     public void close() throws Exception{

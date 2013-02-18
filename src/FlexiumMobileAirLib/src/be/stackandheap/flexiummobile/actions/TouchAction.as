@@ -1,4 +1,5 @@
 package be.stackandheap.flexiummobile.actions {
+import be.stackandheap.flexiummobile.entity.FlexiumObject;
 import be.stackandheap.flexiummobile.parser.AppParser;
 import be.stackandheap.flexiummobile.utils.Errors;
 
@@ -24,41 +25,56 @@ public class TouchAction extends AbstractAction implements IAction {
         attach("doZoomGesture", doZoomGesture);
     }
 
-    public function doTap(elementId:String, args:String=null):String {
-        var child:Object = parser.getElement(elementId);
+    public function doTap(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
 
-        if (child == null) {
-            return Errors.OBJECT_NOT_FOUND;
+        if (child == null){
+            obj.message = Errors.OBJECT_NOT_FOUND;
+            return obj;
         }
 
-        if (!args) {
-            return String(child.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_TAP)));
+        if (!obj.args) {
+            obj.succes = child.dispatchEvent(new TouchEvent(TouchEvent.TOUCH_TAP));
+        }else{
+            obj.message = Errors.OBJECT_NOT_COMPATIBLE;
         }
 
-        return Errors.OBJECT_NOT_COMPATIBLE;
+        return obj;
     }
 
-    public function doPressAndTap():String{
-            return String(parser.thisApp.dispatchEvent(
-                    new PressAndTapGestureEvent(PressAndTapGestureEvent.GESTURE_PRESS_AND_TAP)));
+    public function doPressAndTap(obj:FlexiumObject):FlexiumObject {
+        obj.succes = parser.thisApp.dispatchEvent(
+                    new PressAndTapGestureEvent(PressAndTapGestureEvent.GESTURE_PRESS_AND_TAP));
+        return obj;
     }
 
-    public function doZoomGesture(elementId:String, zoomPercentage:Number):String{
-        var child:Object = parser.getElement(elementId);
-        if (child == null) {
-            return Errors.OBJECT_NOT_FOUND;
+    public function doZoomGesture(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
+
+        if (child == null){
+            obj.message = Errors.OBJECT_NOT_FOUND;
+            return obj;
         }
-        var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_ZOOM);
-        e.scaleX = e.scaleY = zoomPercentage;
-        return String(child.dispatchEvent(e));
+
+        if (obj.args) {
+            var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_ZOOM);
+            e.scaleX = e.scaleY = obj.args as Number;
+            obj.succes = child.dispatchEvent(e);
+        }else{
+            obj.message = Errors.OBJECT_NOT_COMPATIBLE;
+        }
+
+        return obj;
     }
-    public function doPanGesture(elementId:String, toDirection:String):String{
-        var child:Object = parser.getElement(elementId);
-        if (child == null) {
-            return Errors.OBJECT_NOT_FOUND;
+    public function doPanGesture(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
+        if (child == null){
+            obj.message = Errors.OBJECT_NOT_FOUND;
+            return obj;
         }
+
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_PAN);
-        switch(toDirection.toUpperCase()){
+        switch(obj.args.toUpperCase()){
             case "UP":
                 e.offsetY = -1;
                 break;
@@ -72,28 +88,33 @@ public class TouchAction extends AbstractAction implements IAction {
                 e.offsetX = 1;
                 break;
             default:
-                return Errors.PROPERTY_DOESNT_EXIST;
-                break;
+                obj.message = Errors.PROPERTY_DOESNT_EXIST;
+                return obj;
 
         }
-        return String(child.dispatchEvent(e));
+        obj.succes = child.dispatchEvent(e);
+        return obj;
     }
-    public function doRotateGesture(elementId:String, rotation:Number):String{
-        var child:Object = parser.getElement(elementId);
-        if (child == null) {
-            return Errors.OBJECT_NOT_FOUND;
+    public function doRotateGesture(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
+        if (child == null){
+            obj.message = Errors.OBJECT_NOT_FOUND;
+            return obj;
         }
+
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_ROTATE);
-        e.rotation = rotation;
-        return String(child.dispatchEvent(e));
+        e.rotation = obj.args as Number;
+        obj.succes = child.dispatchEvent(e);
+        return obj;
     }
-    public function doSwipeGesture(elementId:String, toDirection:String):String{
-        var child:Object = parser.getElement(elementId);
-        if (child == null) {
-            return Errors.OBJECT_NOT_FOUND;
+    public function doSwipeGesture(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
+        if (child == null){
+            obj.message = Errors.OBJECT_NOT_FOUND;
+            return obj;
         }
         var e:TransformGestureEvent = new TransformGestureEvent(TransformGestureEvent.GESTURE_SWIPE);
-        switch(toDirection.toUpperCase()){
+        switch(obj.args.toUpperCase()){
             case "UP":
                 e.offsetY = -1;
                 break;
@@ -107,12 +128,11 @@ public class TouchAction extends AbstractAction implements IAction {
                 e.offsetX = 1;
                 break;
             default:
-                return Errors.PROPERTY_DOESNT_EXIST;
-                break;
-
+                obj.message = Errors.PROPERTY_DOESNT_EXIST;
+                return obj;
         }
-        return String(child.dispatchEvent(e));
+        obj.succes = child.dispatchEvent(e);
+        return obj;
     }
-
 }
 }

@@ -1,5 +1,4 @@
 package be.stackandheap.flexiummobile.socket {
-import flash.errors.IOError;
 import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IOErrorEvent;
@@ -19,12 +18,14 @@ public class SocketConnection extends EventDispatcher{
 
     public function connect():void {
         try{
+            trace("make connection: "+host);
             socket=new Socket();
             socket.addEventListener(Event.CONNECT, socket_connectHandler);
             socket.addEventListener(IOErrorEvent.IO_ERROR, socket_errorHandler);
             socket.connect(host, port);
-        }catch(e:IOErrorEvent){
-            this.dispatchEvent(new SocketEvent(SocketEvent.ERROR,'Could not establish connection with server'));
+        }catch(e:Error){
+            trace("failed: "+e);
+            this.dispatchEvent(new SocketEvent(SocketEvent.ERROR,'Could not establish connection with server '+e));
         }
     }
     public function close():void{

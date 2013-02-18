@@ -1,4 +1,5 @@
 package be.stackandheap.flexiummobile.actions {
+import be.stackandheap.flexiummobile.entity.FlexiumObject;
 import be.stackandheap.flexiummobile.parser.AppParser;
 import be.stackandheap.flexiummobile.utils.*;
 import flash.events.Event;
@@ -15,46 +16,56 @@ public class ComponentAction extends AbstractAction implements IAction {
         attach("selectElement",selectElement);
     }
 
-    public function isVisible(id:String):String {
-        var child:Object = parser.getElement(id);
+    public function isVisible(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
         if(child) {
             if(child.hasOwnProperty("visible")) {
-                return child.visible;
+                obj.succes = true;
+                obj.message = child.visible;
             } else {
-                return Errors.PROPERTY_DOESNT_EXIST;
+                obj.message = Errors.PROPERTY_DOESNT_EXIST;
             }
         } else {
-            return Errors.OBJECT_NOT_FOUND;
+            obj.message = Errors.OBJECT_NOT_FOUND;
         }
+        return obj;
     }
-    public function hasItem(id:String, label:String):String {
-        var child:Object = parser.getElement(id);
+    public function hasItem(obj:FlexiumObject):FlexiumObject {
+        var child:Object = parser.getElement(obj.id);
         if (Utils.isA(child, References.LIST_DESCRIPTION)) {
-            return sparkListHasItem(child as List, label);
+            if(sparkListHasItem(child as List, obj.args)){
+                obj.succes = true;
+            }else{
+                obj.message = Errors.OBJECT_NOT_FOUND;
+            }
+        }else{
+            obj.message = Errors.OBJECT_NOT_COMPATIBLE;
         }
-        return Errors.OBJECT_NOT_COMPATIBLE;
+        return obj;
     }
-    private function sparkListHasItem(list:List, label:String):String {
+    private function sparkListHasItem(list:List, label:String):Boolean {
         for each (var item:Object in list.dataProvider) {
             if (list.itemToLabel(item) == label) {
-                return "true";
+                return true;
             }
         }
-        return "false";
+        return false;
     }
-    public function selectElement(elementId:String, selected:String):String{
-        var child:Object = parser.getElement(elementId);
+    public function selectElement(obj:FlexiumObject):FlexiumObject{
+        var child:Object = parser.getElement(obj.id);
         if(child) {
             if(child.hasOwnProperty("selected")) {
-                child.selected = selected=='true';
+                child.selected = obj.args=='true';
                 child.dispatchEvent(new Event(Event.CHANGE));
-                return child.selected;
+                obj.message = child.selected;
+                obj.succes = true;
             } else {
-                return Errors.PROPERTY_DOESNT_EXIST;
+                obj.message = Errors.PROPERTY_DOESNT_EXIST;
             }
         } else {
-            return Errors.OBJECT_NOT_FOUND;
+            obj.message = Errors.OBJECT_NOT_FOUND;
         }
+        return obj;
     }
 }
 }
