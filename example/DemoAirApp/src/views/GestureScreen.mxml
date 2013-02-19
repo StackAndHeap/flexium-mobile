@@ -18,7 +18,7 @@
             mySprite = new Sprite();
             mySprite.name = "mySprite";
             mySprite.graphics.beginFill(0x336699);
-            mySprite.graphics.drawRect(100,100,50,50);
+            mySprite.graphics.drawRect(100,100,205,205);
             drawField.addChild(mySprite);
 
             mySprite.addEventListener(TransformGestureEvent.GESTURE_PAN, gesturePanHandler);

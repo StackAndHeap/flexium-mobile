@@ -1,5 +1,2 @@
-- communicatie tussen client & server met json-strings ipv strings van het type: "id:agr1,arg2,..."
-- betere errormessages
-- instellingen file voor ipadres/port
 - logger maken
 - nog fouten in gestures

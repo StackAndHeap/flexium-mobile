@@ -34,18 +34,20 @@ public class FlexMobileAirLib extends Sprite {
     }
 
     private function applicationCompleteHandler(event:FlexEvent):void {
+        var file:File = File.applicationDirectory.resolvePath( "config.xml" );
+        var stream:FileStream = new FileStream();
         try{
-            var file:File = File.applicationDirectory.resolvePath( "config.xml" );
-            var stream:FileStream = new FileStream();
             stream.open( file, FileMode.READ );
             config = new XML( stream.readUTFBytes( stream.bytesAvailable ));
             stream.close();
+            trace('config found');
         }catch(e:Error){
             trace('No config file found in source folder, loading defaults...');
-            config = new XML();
-            config.server = "localhost";
-            config.port = "4444";
-            config.enableFlexium = "true";
+            var newFile:File = new File( file.nativePath );
+            stream.open(newFile, FileMode.WRITE);
+            config = new XML("<?xml version='1.0' encoding='ISO-8859-1'?><config><server>localhost</server><port>4444</port><enableFlexium>true</enableFlexium></config>");
+            stream.writeUTFBytes(config);
+            stream.close();
         }
 
         if(config.enableFlexium=='true'){
