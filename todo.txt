@@ -1,2 +1,0 @@
-- logger maken
-- nog fouten in gestures
