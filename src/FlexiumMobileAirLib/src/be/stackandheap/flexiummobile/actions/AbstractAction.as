@@ -1,20 +1,20 @@
 package be.stackandheap.flexiummobile.actions {
 import be.stackandheap.flexiummobile.actionregister.ActionRegister;
-import be.stackandheap.flexiummobile.parser.AppParser;
+import be.stackandheap.flexiummobile.parser.StageParser;
 
 public class AbstractAction {
 
-    private var _parser:AppParser;
+    private var _parser:StageParser;
 
-    public function AbstractAction(parser:AppParser) {
+    public function AbstractAction(parser:StageParser) {
         this.parser = parser
     }
 
-    public function get parser():AppParser {
+    public function get parser():StageParser {
         return _parser;
     }
 
-    public function set parser(value:AppParser):void {
+    public function set parser(value:StageParser):void {
         _parser = value;
     }
 

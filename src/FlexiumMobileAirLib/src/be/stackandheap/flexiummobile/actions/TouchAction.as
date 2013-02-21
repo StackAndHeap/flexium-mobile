@@ -1,6 +1,6 @@
 package be.stackandheap.flexiummobile.actions {
-import be.stackandheap.flexiummobile.entity.FlexiumObject;
-import be.stackandheap.flexiummobile.parser.AppParser;
+import be.stackandheap.flexiummobile.entity.AirAction;
+import be.stackandheap.flexiummobile.parser.StageParser;
 import be.stackandheap.flexiummobile.utils.Errors;
 
 import flash.events.PressAndTapGestureEvent;
@@ -12,21 +12,21 @@ import mx.core.mx_internal;
 use namespace mx_internal;
 
 public class TouchAction extends AbstractAction implements IAction {
-    public function TouchAction(parser:AppParser) {
+    public function TouchAction(parser:StageParser) {
         super(parser);
     }
 
     public function attachActions():void {
         attach("doTap", doTap);
-        attach("doPressAndTap", doPressAndTap);
+//        attach("doPressAndTap", doPressAndTap);
         attach("doPanGesture", doPanGesture);
         attach("doRotateGesture", doRotateGesture);
         attach("doSwipeGesture", doSwipeGesture);
         attach("doZoomGesture", doZoomGesture);
     }
 
-    public function doTap(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
+    public function doTap(obj:AirAction):AirAction {
+        var child:Object = parser.getElementById(obj.element.id);
 
         if (child == null){
             obj.message = Errors.OBJECT_NOT_FOUND;
@@ -42,14 +42,14 @@ public class TouchAction extends AbstractAction implements IAction {
         return obj;
     }
 
-    public function doPressAndTap(obj:FlexiumObject):FlexiumObject {
-        obj.succes = parser.thisApp.dispatchEvent(
-                    new PressAndTapGestureEvent(PressAndTapGestureEvent.GESTURE_PRESS_AND_TAP));
-        return obj;
-    }
+//    public function doPressAndTap(obj:AirAction):AirAction {
+//        obj.succes = parser.thisApp.dispatchEvent(
+//                    new PressAndTapGestureEvent(PressAndTapGestureEvent.GESTURE_PRESS_AND_TAP));
+//        return obj;
+//    }
 
-    public function doZoomGesture(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
+    public function doZoomGesture(obj:AirAction):AirAction {
+        var child:Object = parser.getElementById(obj.element.id);
 
         if (child == null){
             obj.message = Errors.OBJECT_NOT_FOUND;
@@ -66,8 +66,8 @@ public class TouchAction extends AbstractAction implements IAction {
 
         return obj;
     }
-    public function doPanGesture(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
+    public function doPanGesture(obj:AirAction):AirAction {
+        var child:Object = parser.getElementById(obj.element.id);
         if (child == null){
             obj.message = Errors.OBJECT_NOT_FOUND;
             return obj;
@@ -95,8 +95,8 @@ public class TouchAction extends AbstractAction implements IAction {
         obj.succes = child.dispatchEvent(e);
         return obj;
     }
-    public function doRotateGesture(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
+    public function doRotateGesture(obj:AirAction):AirAction {
+        var child:Object = parser.getElementById(obj.element.id);
         if (child == null){
             obj.message = Errors.OBJECT_NOT_FOUND;
             return obj;
@@ -107,8 +107,8 @@ public class TouchAction extends AbstractAction implements IAction {
         obj.succes = child.dispatchEvent(e);
         return obj;
     }
-    public function doSwipeGesture(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
+    public function doSwipeGesture(obj:AirAction):AirAction {
+        var child:Object = parser.getElementById(obj.element.id);
         if (child == null){
             obj.message = Errors.OBJECT_NOT_FOUND;
             return obj;

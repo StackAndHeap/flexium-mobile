@@ -43,7 +43,7 @@ public class Utils {
 
         // match up in type hierarchy to match extended classes
         for each (var clazzExtended:XML in classInfo.extendsClass) {
-            trace("checking if '" + requiredTypeInHierarchy + "'='" + clazzExtended.@type + "'");
+            //trace("checking if '" + requiredTypeInHierarchy + "'='" + clazzExtended.@type + "'");
             if (requiredTypeInHierarchy == clazzExtended.@type) {
                 return true;
             }

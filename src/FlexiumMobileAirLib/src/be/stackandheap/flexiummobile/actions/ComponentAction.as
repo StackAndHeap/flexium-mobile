@@ -1,12 +1,12 @@
 package be.stackandheap.flexiummobile.actions {
-import be.stackandheap.flexiummobile.entity.FlexiumObject;
-import be.stackandheap.flexiummobile.parser.AppParser;
+import be.stackandheap.flexiummobile.entity.AirAction;
+import be.stackandheap.flexiummobile.parser.StageParser;
 import be.stackandheap.flexiummobile.utils.*;
 import flash.events.Event;
 import spark.components.List;
 
 public class ComponentAction extends AbstractAction implements IAction {
-    public function ComponentAction(parser:AppParser) {
+    public function ComponentAction(parser:StageParser) {
         super(parser);
     }
 
@@ -16,24 +16,20 @@ public class ComponentAction extends AbstractAction implements IAction {
         attach("selectElement",selectElement);
     }
 
-    public function isVisible(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
-        if(child) {
-            if(child.hasOwnProperty("visible")) {
-                obj.succes = true;
-                obj.message = child.visible;
-            } else {
-                obj.message = Errors.PROPERTY_DOESNT_EXIST;
-            }
+    public function isVisible(obj:AirAction):AirAction {
+        
+        if(obj.element.hasOwnProperty("visible")) {
+            obj.succes = true;
+            obj.message = obj.element.visible;
         } else {
-            obj.message = Errors.OBJECT_NOT_FOUND;
+            obj.message = Errors.PROPERTY_DOESNT_EXIST;
         }
+            
         return obj;
     }
-    public function hasItem(obj:FlexiumObject):FlexiumObject {
-        var child:Object = parser.getElement(obj.id);
-        if (Utils.isA(child, References.LIST_DESCRIPTION)) {
-            if(sparkListHasItem(child as List, obj.args)){
+    public function hasItem(obj:AirAction):AirAction {
+        if (Utils.isA(obj.element, References.LIST_DESCRIPTION)) {
+            if(sparkListHasItem(obj.element as List, obj.args)){
                 obj.succes = true;
             }else{
                 obj.message = Errors.OBJECT_NOT_FOUND;
@@ -51,19 +47,14 @@ public class ComponentAction extends AbstractAction implements IAction {
         }
         return false;
     }
-    public function selectElement(obj:FlexiumObject):FlexiumObject{
-        var child:Object = parser.getElement(obj.id);
-        if(child) {
-            if(child.hasOwnProperty("selected")) {
-                child.selected = obj.args=='true';
-                child.dispatchEvent(new Event(Event.CHANGE));
-                obj.message = child.selected;
-                obj.succes = true;
-            } else {
-                obj.message = Errors.PROPERTY_DOESNT_EXIST;
-            }
+    public function selectElement(obj:AirAction):AirAction{
+        if(obj.element.hasOwnProperty("selected")) {
+            obj.element.selected = obj.args=='true';
+            obj.element.dispatchEvent(new Event(Event.CHANGE));
+            obj.message = obj.element.selected;
+            obj.succes = true;
         } else {
-            obj.message = Errors.OBJECT_NOT_FOUND;
+            obj.message = Errors.PROPERTY_DOESNT_EXIST;
         }
         return obj;
     }

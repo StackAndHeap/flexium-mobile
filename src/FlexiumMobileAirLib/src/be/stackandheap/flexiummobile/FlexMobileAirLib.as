@@ -2,8 +2,10 @@ package be.stackandheap.flexiummobile {
 
 import be.stackandheap.flexiummobile.actionregister.ActionRegister;
 import be.stackandheap.flexiummobile.actions.Actions;
-import be.stackandheap.flexiummobile.parser.AppParser;
+import be.stackandheap.flexiummobile.entity.AirAction;
+import be.stackandheap.flexiummobile.parser.StageParser;
 import be.stackandheap.flexiummobile.socket.*;
+import be.stackandheap.flexiummobile.utils.Errors;
 import flash.display.Sprite;
 import flash.filesystem.File;
 import flash.filesystem.FileMode;
@@ -15,7 +17,7 @@ import mx.events.FlexEvent;
 public class FlexMobileAirLib extends Sprite {
     public static var airtester:FlexMobileAirLib;
     public static var application:Object;
-    public var appParser:AppParser;
+    public var stageParser:StageParser;
     public var actions:Actions;
     public var socketConnection:SocketConnection;
     public var config:XML;
@@ -25,7 +27,6 @@ public class FlexMobileAirLib extends Sprite {
         app.addEventListener(FlexEvent.APPLICATION_COMPLETE, applicationCompleteHandler);
     }
 
-
     public static function init(systemRoot:Object):void {
         if(!airtester) {
             application = systemRoot;
@@ -34,6 +35,17 @@ public class FlexMobileAirLib extends Sprite {
     }
 
     private function applicationCompleteHandler(event:FlexEvent):void {
+        loadConfigFile();
+        if(config.enableFlexium=='true'){
+            application.removeEventListener(FlexEvent.APPLICATION_COMPLETE, applicationCompleteHandler);
+            stageParser = new StageParser();
+            actions = new Actions(stageParser);
+            connectToServer();
+        }
+//        var recorder:Recorder = new Recorder(application);
+    }
+
+    private function loadConfigFile():void {
         var file:File = File.applicationDirectory.resolvePath( "config.xml" );
         var stream:FileStream = new FileStream();
         try{
@@ -43,26 +55,21 @@ public class FlexMobileAirLib extends Sprite {
             trace('config found');
         }catch(e:Error){
             trace('No config file found in source folder, loading defaults...');
-            var newFile:File = new File( file.nativePath );
-            stream.open(newFile, FileMode.WRITE);
-            config = new XML("<?xml version='1.0' encoding='ISO-8859-1'?><config><server>localhost</server><port>4444</port><enableFlexium>true</enableFlexium></config>");
-            stream.writeUTFBytes(config);
-            stream.close();
-        }
-
-        if(config.enableFlexium=='true'){
-            application.removeEventListener(FlexEvent.APPLICATION_COMPLETE, applicationCompleteHandler);
-            appParser = new AppParser(application.getChildAt(0));
-            appParser.setTooltipsToID();
-            actions = new Actions(appParser);
-            connectToServer();
+            createNewConfigFile(file);
         }
     }
 
+    private function createNewConfigFile(file:File):void {
+        var stream:FileStream = new FileStream();
+        var newFile:File = new File( file.nativePath );
+        stream.open(newFile, FileMode.WRITE);
+        config = new XML("<?xml version='1.0' encoding='ISO-8859-1'?><config><server>localhost</server><port>4444</port><enableFlexium>true</enableFlexium></config>");
+        stream.writeUTFBytes(config);
+        stream.close();
+    }
+
     private function connectToServer():void {
-        //socketConnection = new SocketConnection("10.1.179.201",  4444);
-        //socketConnection = new SocketConnection("87.64.218.110",  4444);
-        //socketConnection = new SocketConnection("192.168.1.5",  4444);
+
         socketConnection = new SocketConnection(config.server,  config.port);
         socketConnection.addEventListener(SocketEvent.CONNECTED, socketConnectHandler);
         socketConnection.addEventListener(SocketEvent.RECEIVED_DATA, socketDataReceivedHandler);
@@ -81,14 +88,32 @@ public class FlexMobileAirLib extends Sprite {
         trace('connected');
     }
     private function socketDataReceivedHandler(event:SocketEvent):void {
-        var receivedString:String = event.data.toString();
-        trace('data receivedString: ' + receivedString);
+        trace('data receivedString: ' + event.data.toString());
+        var returnAction:AirAction = executeAction(event.data.toString());
+        if(returnAction.element != null)
+            returnAction.element = returnAction.element.id;
 
-        var command:Array = receivedString.split(":");
-        var functionName:String = command[0];
-        var arguments:String = command[1];
-        var stringToSend:String = JSON.stringify(ActionRegister.call(functionName,arguments));
+        var stringToSend:String = JSON.stringify(returnAction);
         socketConnection.sendToSocket(stringToSend);
+    }
+
+    private function executeAction(jsonString:String):AirAction {
+        var receivedAction:AirAction = new AirAction();
+        var obj:Object = JSON.parse(jsonString);
+
+        receivedAction.name = obj.name;
+        receivedAction.args = obj.args;
+        if (obj.element != null){
+            try{
+                var element:Object = stageParser.getElementById(obj.element);
+                receivedAction.element = element;
+            }catch(e:Error){
+                receivedAction.message = Errors.OBJECT_NOT_FOUND;
+                receivedAction.succes = false;
+                return receivedAction;
+            }
+        }
+        return ActionRegister.call(receivedAction);
     }
 }
 }

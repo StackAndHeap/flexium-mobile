@@ -1,15 +1,15 @@
 package be.stackandheap.flexiummobile.actions {
-import be.stackandheap.flexiummobile.parser.AppParser;
+import be.stackandheap.flexiummobile.parser.StageParser;
 
 public class Actions {
     private var actionClasses:Array;
 
-    public function Actions(parser:AppParser) {
+    public function Actions(parser:StageParser) {
         addActions(parser);
         attachActions();
     }
 
-    private function addActions(parser:AppParser):void {
+    private function addActions(parser:StageParser):void {
         actionClasses = [];
         actionClasses.push(new MouseAction(parser));
         actionClasses.push(new KeyboardAction(parser));

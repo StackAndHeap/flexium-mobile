@@ -14,7 +14,7 @@ public class EventDispatchingObjectProcessor implements IStageObjectProcessor, I
         try{
             _stageParser.addElement((displayObject as UIComponent).id, displayObject);
         }catch(e:TypeError){
-            trace("processerror: "+displayObject);
+            //trace("processerror: "+displayObject);
         }
 
         return displayObject;
@@ -24,7 +24,7 @@ public class EventDispatchingObjectProcessor implements IStageObjectProcessor, I
         try{
             _stageParser.removeElement((displayObject as UIComponent).id);
         }catch(e:Error){
-            trace("destroy-error: "+displayObject);
+            //trace("destroy-error: "+displayObject);
         }
         return displayObject;
     }
