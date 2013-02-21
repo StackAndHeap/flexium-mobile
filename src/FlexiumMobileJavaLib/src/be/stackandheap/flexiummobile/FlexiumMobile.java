@@ -1,62 +1,74 @@
 package be.stackandheap.flexiummobile;
 
-
-import org.json.simple.JSONObject;
+import be.stackandheap.flexiummobile.entity.AirAction;
 
 public class FlexiumMobile extends Server {
 
-    public FlexiumMobile(){
+
+    public AirAction clickElement( String elementId ) throws Exception{
+        AirAction sendAction = new AirAction("doFlexClick",elementId);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
 
-    public void clickElement(String elementId) throws Exception{
-        JSONObject jsonObject = call("doFlexClick",elementId);
-
+    public AirAction clickItemInElement(String elementId,String itemLabel) throws Exception{
+        AirAction sendAction = new AirAction("doFlexClick",elementId,itemLabel);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void clickItemInElement(String elementId,String itemLabel) throws Exception{
-        String args =  elementId +","+itemLabel;
-        JSONObject jsonObject = call("doFlexClick",args);
+    public AirAction setText(String elementId,String value) throws Exception{
+        AirAction sendAction = new AirAction("doFlexType",elementId,value);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void setText(String elementId,String value) throws Exception{
-        String args =  elementId +","+value;
-        JSONObject jsonObject = call("doFlexType",args);
+    public AirAction getTextFromTitleContent() throws Exception{
+        AirAction sendAction = new AirAction("getTextFromTitleContent",null);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public String getActiveViewTitle() throws Exception{
-        JSONObject jsonObject = call("getCurrentViewTitle");
-        return ""+jsonObject.get("message");
+    public AirAction testSocketConnection() throws Exception{
+        AirAction sendAction = new AirAction("doHandshake",null);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public Boolean testSocketConnection() throws Exception{
-        JSONObject handshakeReturn =  call("doHandshake");
-        return handshakeReturn.get("message").equals("Hello!");
+    public AirAction elementHasItem(String elementId,String itemLabel) throws Exception{
+        AirAction sendAction = new AirAction("hasItem",elementId,itemLabel);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public Boolean elementHasItem(String elementId,String itemLabel) throws Exception{
-        String args =  elementId +","+itemLabel;
-        JSONObject jsonObject =  call("hasItem",args);
-        return (Boolean) jsonObject.get("succes");
+    public AirAction tapElement(String elementId) throws Exception{
+        AirAction sendAction = new AirAction("doTap",elementId);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void tapElement(String elementId) throws Exception{
-        JSONObject jsonObject = call("doTap",elementId);
+    public AirAction openContextMenu(String elementId) throws Exception{
+        AirAction sendAction = new AirAction("doPressAndTap",elementId);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void openContextMenu() throws Exception{
-        call("doPressAndTap");
+    public AirAction selectElement(String elementId,String selected) throws Exception{
+        AirAction sendAction = new AirAction("selectElement",elementId,selected);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void selectElement(String elementId,String selected) throws Exception{
-        String args =  elementId +","+selected;
-        JSONObject jsonObject =   call("selectElement",args);
+    public AirAction swipe(String elementId,String toDirection) throws Exception{
+        AirAction sendAction = new AirAction("doSwipeGesture",elementId,toDirection);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void swipe(String elementId,String toDirection) throws Exception{
-        String args =  elementId +","+toDirection;
-        call("doSwipeGesture",args);
+    public AirAction pan(String elementId,String toDirection) throws Exception{
+        AirAction sendAction = new AirAction("doPanGesture",elementId,toDirection);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void pan(String elementId,String toDirection) throws Exception{
-        String args =  elementId +","+toDirection;
-        call("doPanGesture",args);
+    public AirAction rotate(String elementId,Number degrees) throws Exception{
+        AirAction sendAction = new AirAction("doRotateGesture",elementId,degrees.toString());
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
-    public void rotate(String elementId,Number degrees) throws Exception{
-        String args =  elementId +","+degrees.toString();
-        call("doRotateGesture",args);
-    }
-    public void zoom(String elementId,Number zoomPercentage) throws Exception{
-        String args =  elementId +","+zoomPercentage.toString();
-        call("doZoomGesture",args);
+    public AirAction zoom(String elementId,Number zoomPercentage) throws Exception{
+        AirAction sendAction = new AirAction("doZoomGesture",elementId,zoomPercentage.toString());
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
     }
 }

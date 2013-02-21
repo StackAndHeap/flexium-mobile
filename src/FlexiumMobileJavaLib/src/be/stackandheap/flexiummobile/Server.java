@@ -1,5 +1,7 @@
 package be.stackandheap.flexiummobile;
 
+import be.stackandheap.flexiummobile.entity.AirAction;
+import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -11,8 +13,10 @@ public class Server {
     private static Connection connection;
     private static Socket client;
     private int pause = 0;
+    private Gson gson;
 
     public Server() {
+        gson = new Gson();
     }
     public int getPause() {
         return pause;
@@ -32,24 +36,19 @@ public class Server {
              throw new Exception("connection failed ",e);
         }
     }
-    public JSONObject call(String functionName,String args) throws Exception{
+    public AirAction call(AirAction action) throws Exception{
         Thread.sleep(getPause());
-        String msg;
-        msg = (args == null) ? functionName:functionName + ":" + args;
-        connection.sendMessage(msg);
 
-        String returnVal = connection.in.readLine();
-        JSONObject jsonObject = (JSONObject)new JSONParser().parse(returnVal);
-        System.out.println(jsonObject.get("succes"));
-        System.out.println(jsonObject.get("id"));
+        String jsonAction = gson.toJson(action);
+        connection.sendMessage(jsonAction);
 
-        if((Boolean)jsonObject.get("succes") == false){
-            throw new Exception("Action failed: "+jsonObject.get("message"));
-        }
-        return jsonObject;
+        return readReturnAction();
     }
-    public JSONObject call(String functionName) throws Exception{
-        return call(functionName,null);
+    public AirAction readReturnAction() throws Exception{
+        //todo a lot here
+        String returnVal = connection.in.readLine();
+        AirAction action = gson.fromJson(returnVal, AirAction.class);
+        return action;
     }
     public void close() throws Exception{
         serverSocket.close();
