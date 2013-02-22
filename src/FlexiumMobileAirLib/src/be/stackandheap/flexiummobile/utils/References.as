@@ -15,6 +15,7 @@ public class References {
     public static const RADIOBUTTON_DESCRIPTION:String = "mx.controls::RadioButton";
     public static const ACCORDION_DESCRIPTION:String = "mx.containers::Accordion";
     public static const LIST_DESCRIPTION:String = "spark.components::List";
+    public static const SPINNER_DESCRIPTION:String = "spark.components::SpinnerList";
     public static const SPARKTREE_DESCRIPTION:String = "com.sparkTree::Tree";
     public static const BUTTONBAR_DESCRIPTION:String = "mx.controls::ButtonBar";
     public static const LINKBAR_DESCRIPTION:String = "mx.controls::LinkBar";

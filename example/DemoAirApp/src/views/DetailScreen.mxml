@@ -18,6 +18,10 @@
         private function get published():String {
             return data.publish.toString();
         }
+        [Bindable(event='dataChange')]
+        private function get author():String {
+            return data.author.toString();
+        }
 
         private function button1_clickHandler(event:MouseEvent):void {
                navigator.popView();
@@ -35,14 +39,16 @@
             <s:constraintRows>
                 <s:ConstraintRow id="topPaddingRow" height="10"/>
                 <s:ConstraintRow id="row1" height="50"/>
-                <s:ConstraintRow id="row2" height="100%"/>
-                <s:ConstraintRow id="row3" height="50"/>
+                <s:ConstraintRow id="row2" height="50"/>
+                <s:ConstraintRow id="row3" height="100%"/>
+                <s:ConstraintRow id="row4" height="50"/>
                 <s:ConstraintRow id="bottomPaddingRow" height="10"/>
             </s:constraintRows>
         </s:ConstraintLayout>
     </s:layout>
 
     <s:Label text="Title: {titel}" left="column1:0" right="column1:0" top="row1:10"/>
-    <s:Label text="Content: {content}" left="column1:0" right="column1:0" top="row2:10"/>
-    <s:Label text="Published: {published}" left="column1:0" right="column1:0" top="row3:10"/>
+    <s:Label text="Author: {author}" left="column1:0" right="column1:0" top="row2:10"/>
+    <s:Label text="Content: {content}" left="column1:0" right="column1:0" top="row3:10"/>
+    <s:Label text="Published: {published}" left="column1:0" right="column1:0" top="row4:10"/>
 </s:View>

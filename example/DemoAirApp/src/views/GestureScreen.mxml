@@ -8,42 +8,56 @@
         private var post:Object;
         private var mySprite:Sprite;
 
+        private var colors:Array = [0xff0000, 0x00ff00, 0x0000ff, 0x000000];
+        private var measures:Array = [50, 100, 200, 150];
+        private var counter:int = 0;
+
         private function navButton_clickHandler(event:MouseEvent):void {
             navigator.popView();
         }
 
         private function addedToStageHandler(event:Event):void {
-            Multitouch.inputMode=MultitouchInputMode.GESTURE;
+            Multitouch.inputMode = MultitouchInputMode.GESTURE;
+            drawShape();
 
+            this.addEventListener(TransformGestureEvent.GESTURE_PAN, gesturePanHandler);
+            this.addEventListener(TransformGestureEvent.GESTURE_ROTATE, gestureRotateHandler);
+            this.addEventListener(TransformGestureEvent.GESTURE_SWIPE, gestureSwipeHandler);
+            this.addEventListener(TransformGestureEvent.GESTURE_ZOOM, gestureZoomHandler);
+        }
+
+        private function drawShape():void {
+            drawField.removeChildren();
             mySprite = new Sprite();
             mySprite.name = "mySprite";
-            mySprite.graphics.beginFill(0x336699);
-            mySprite.graphics.drawRect(100,100,205,205);
+            mySprite.graphics.beginFill(colors[counter]);
+            mySprite.graphics.drawRect(100, 100, measures[counter], measures[counter]);
             drawField.addChild(mySprite);
-
-            mySprite.addEventListener(TransformGestureEvent.GESTURE_PAN, gesturePanHandler);
-            mySprite.addEventListener(TransformGestureEvent.GESTURE_ROTATE, gestureRotateHandler);
-            mySprite.addEventListener(TransformGestureEvent.GESTURE_SWIPE, gestureSwipeHandler);
-            mySprite.addEventListener(TransformGestureEvent.GESTURE_ZOOM, gestureZoomHandler);
         }
+
         private function gesturePanHandler(event:TransformGestureEvent):void {
-            if(event.offsetX != 0)
+            if (event.offsetX != 0)
                 mySprite.x -= 75 * event.offsetX;
-            if(event.offsetY != 0)
+            if (event.offsetY != 0)
                 mySprite.y -= 75 * event.offsetY;
         }
+
         private function gestureRotateHandler(event:TransformGestureEvent):void {
             mySprite.rotation = event.rotation;
         }
+
         private function gestureSwipeHandler(event:TransformGestureEvent):void {
-            if(event.offsetX != 0)
-                mySprite.x += 75 * event.offsetX;
-            if(event.offsetY != 0)
-                mySprite.y += 75 * event.offsetY;
+            if (event.offsetX == 1)
+                counter < colors.length ? counter += event.offsetX : counter = 0;
+            else if (event.offsetX == -1)
+                counter > 0 ? counter += event.offsetX : counter = colors.length;
+
+            drawShape();
         }
+
         private function gestureZoomHandler(event:TransformGestureEvent):void {
             mySprite.scaleX = mySprite.scaleY = event.scaleX;
         }
         ]]></fx:Script>
-    <s:SpriteVisualElement id="drawField" width="500" height="300"/>
+    <s:SpriteVisualElement id="drawField" width="500" height="300" />
 </s:View>

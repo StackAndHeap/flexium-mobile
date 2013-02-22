@@ -71,4 +71,9 @@ public class FlexiumMobile extends Server {
         AirAction receivedAction = call(sendAction);
         return receivedAction;
     }
+    public AirAction setFocus(String elementId) throws Exception{
+        AirAction sendAction = new AirAction("setFocus",elementId);
+        AirAction receivedAction = call(sendAction);
+        return receivedAction;
+    }
 }

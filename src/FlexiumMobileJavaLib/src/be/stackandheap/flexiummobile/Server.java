@@ -7,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Server {
     private static ServerSocket serverSocket;
@@ -45,10 +46,19 @@ public class Server {
         return readReturnAction();
     }
     public AirAction readReturnAction() throws Exception{
-        //todo a lot here
-        String returnVal = connection.in.readLine();
-        AirAction action = gson.fromJson(returnVal, AirAction.class);
-        return action;
+        try{
+            String returnVal = connection.in.readLine();
+            AirAction action = gson.fromJson(returnVal, AirAction.class);
+            return action;
+        }catch(SocketException socketException){
+            System.out.println("connection lost, try again in 500ms");
+            Thread.sleep(500);
+            System.out.println("Waiting for connections");
+            client = serverSocket.accept();
+            System.out.println("Accepted a connection from: " + client.getInetAddress());
+            connection = new Connection(client);
+            return readReturnAction();
+        }
     }
     public void close() throws Exception{
         serverSocket.close();

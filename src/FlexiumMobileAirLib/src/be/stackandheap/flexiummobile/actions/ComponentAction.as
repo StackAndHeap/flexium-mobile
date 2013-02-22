@@ -3,6 +3,8 @@ import be.stackandheap.flexiummobile.entity.AirAction;
 import be.stackandheap.flexiummobile.parser.StageParser;
 import be.stackandheap.flexiummobile.utils.*;
 import flash.events.Event;
+import flash.events.FocusEvent;
+
 import spark.components.List;
 
 public class ComponentAction extends AbstractAction implements IAction {
@@ -14,6 +16,7 @@ public class ComponentAction extends AbstractAction implements IAction {
         attach("isVisible",isVisible);
         attach("hasItem",hasItem);
         attach("selectElement",selectElement);
+        attach("setFocus",setFocus);
     }
 
     public function isVisible(obj:AirAction):AirAction {
@@ -56,6 +59,10 @@ public class ComponentAction extends AbstractAction implements IAction {
         } else {
             obj.message = Errors.PROPERTY_DOESNT_EXIST;
         }
+        return obj;
+    }
+    public function setFocus(obj:AirAction):AirAction{
+        obj.succes = obj.element.dispatchEvent(new FocusEvent(FocusEvent.FOCUS_IN));
         return obj;
     }
 }

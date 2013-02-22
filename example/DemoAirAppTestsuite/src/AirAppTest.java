@@ -10,7 +10,7 @@ public class AirAppTest {
     @BeforeClass
     public static void setUp() throws Exception{
             flexiumMobile = new FlexiumMobile();
-            flexiumMobile.setPause(500); //time between calls, optional
+            flexiumMobile.setPause(1000); //time between calls, optional
             flexiumMobile.start(4444);
     }
 
@@ -27,6 +27,8 @@ public class AirAppTest {
         Assert.assertEquals("Create Post view not opened", "Create Post", actionGetTitle.getMessage());
 
         flexiumMobile.setText("titleInput","First Post");
+        flexiumMobile.setFocus("authorInput");
+        flexiumMobile.clickItemInElement("spinnerList","Gert Poppe");
         flexiumMobile.setText("contenTextArea","These are the contents of my first post");
         flexiumMobile.selectElement("publishToggleSwitch","true");
         flexiumMobile.clickElement("submitButton");

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<s:SkinnablePopUpContainer xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+        width="100%" height="100%" skinClass="skins.TransparantModalSkin">
+    <fx:Declarations>
+        <s:ArrayCollection id="dataProvider" />
+        <fx:String id="labelField"></fx:String>
+    </fx:Declarations>
+
+    <s:VGroup width="100%" height="100%" horizontalAlign="center" verticalAlign="middle">
+
+        <s:SpinnerListContainer>
+            <s:SpinnerList id="spinnerList" width="200"
+                           labelField="{labelField}" dataProvider="{dataProvider}"
+                           change="spinnerList_changeHandler(event)"
+                           click="spinnerList_clickHandler(event)"
+                    />
+        </s:SpinnerListContainer>
+    </s:VGroup>
+    <fx:Script><![CDATA[
+        import spark.events.IndexChangeEvent;
+
+        [Event(name="change", type="spark.events.IndexChangeEvent")]
+
+
+        private function spinnerList_changeHandler(event:IndexChangeEvent):void {
+            this.dispatchEvent(event);
+        }
+
+        private function spinnerList_clickHandler(event:MouseEvent):void {
+            this.dispatchEvent(event);
+        }
+        ]]></fx:Script>
+</s:SkinnablePopUpContainer>

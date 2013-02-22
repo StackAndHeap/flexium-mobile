@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
-        xmlns:components="components.*">
+        xmlns:placeholder="components.placeholder.*">
 
     <s:titleContent><s:Label>Create Post</s:Label></s:titleContent>
     <s:navigationContent><s:Button id="backButton" label="back" click="navButton_clickHandler(event)" /></s:navigationContent>
@@ -17,29 +17,46 @@
             <s:constraintRows>
                 <s:ConstraintRow id="topPaddingRow" height="10"/>
                 <s:ConstraintRow id="row1" height="60"/>
-                <s:ConstraintRow id="row2" height="100%"/>
-                <s:ConstraintRow id="row3" height="60"/>
+                <s:ConstraintRow id="row2" height="60"/>
+                <s:ConstraintRow id="row3" height="100%"/>
                 <s:ConstraintRow id="row4" height="60"/>
+                <s:ConstraintRow id="row5" height="60"/>
                 <s:ConstraintRow id="bottomPaddingRow" height="10"/>
             </s:constraintRows>
         </s:ConstraintLayout>
     </s:layout>
 
-    <s:Label text="Publish" left="column1:0" right="column1:0" top="row3:15"/>
-    <components:PlaceholderTextInput id="titleInput" placeHolder="title" left="column1:0" right="column2:0" top="row1:0" bottom="row1:5"/>
-    <components:PlaceholderTextArea id="contenTextArea" placeHolder="content" left="column1:0" right="column2:0" top="row2:0" bottom="row2:5"/>
-    <s:ToggleSwitch id="publishToggleSwitch" left="column2:0" top="row3:0" change="publishToggleSwitch_changeHandler(event)" />
-    <s:Button id="submitButton" label="SUBMIT" left="column1:5" right="column2:5" top="row4:0"  bottom="row4:0" click="submitHandler(event)" />
+    <fx:Declarations>
+        <s:ArrayCollection id="authors">
+            <fx:Object name="Pieter Willaert"/>
+            <fx:Object name="Gert Poppe"/>
+            <fx:Object name="Simon"/>
+            <fx:Object name="Bert"/>
+            <fx:Object name="Michel"/>
+        </s:ArrayCollection>
+    </fx:Declarations>
+
+    <s:Label text="Publish" left="column1:0" right="column1:0" top="row4:15"/>
+    <placeholder:PlaceholderTextInput id="titleInput" placeHolder="title" left="column1:0" right="column2:0" top="row1:0" bottom="row1:5"/>
+    <placeholder:PlaceholderTextInput id="authorInput" placeHolder="author" left="column1:0" right="column2:0" top="row2:0"
+                                      bottom="row2:5" editable="false" focusIn="authorInput_focusHandler(event)"/>
+    <placeholder:PlaceholderTextArea id="contenTextArea" placeHolder="content" left="column1:0" right="column2:0" top="row3:0" bottom="row3:5"/>
+    <s:ToggleSwitch id="publishToggleSwitch" left="column2:0" top="row4:0" change="publishToggleSwitch_changeHandler(event)" />
+    <s:Button id="submitButton" label="SUBMIT" left="column1:5" right="column2:5" top="row5:0"  bottom="row5:0" click="submitHandler(event)" />
 
     <fx:Script><![CDATA[
+        import components.spinnermodal.SpinnerModal;
+        import spark.events.IndexChangeEvent;
+
         private var post:Object;
+        private var spinner:SpinnerModal;
 
         private function navButton_clickHandler(event:MouseEvent):void {
             navigator.popView();
         }
 
         override public function createReturnObject():Object {
-            if(titleInput.text != ""){
+            if (titleInput.text != "") {
                 var returnedObject:Object = new Object();
                 returnedObject.post = this.post;
                 return returnedObject;
@@ -51,13 +68,30 @@
             post = {
                 title: titleInput.text,
                 content: contenTextArea.text,
-                publish: publishToggleSwitch.selected
+                publish: publishToggleSwitch.selected,
+                author: authorInput.text
             }
             navigator.popView();
         }
 
         private function publishToggleSwitch_changeHandler(event:Event):void {
             trace('toggleSwitch changed');
+        }
+
+        private function indexChangedEventHandler(event:Event):void {
+            authorInput.text = event.target.spinnerList.selectedItem.name;
+            spinner.close();
+            contenTextArea.setFocus();
+        }
+
+        private function authorInput_focusHandler(event:FocusEvent):void {
+            spinner = new SpinnerModal();
+            spinner.dataProvider = authors;
+            spinner.labelField = "name";
+            spinner.addEventListener(IndexChangeEvent.CHANGE, indexChangedEventHandler);
+            spinner.width = navigator.width;
+            spinner.height = navigator.height;
+            spinner.open(this, true);
         }
         ]]></fx:Script>
 </s:View>

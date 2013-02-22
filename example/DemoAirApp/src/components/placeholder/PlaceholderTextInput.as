@@ -5,11 +5,11 @@
  * Time: 12:06
  * To change this template use File | Settings | File Templates.
  */
-package components {
+package components.placeholder {
 import flash.events.FocusEvent;
-import spark.components.TextArea;
+import spark.components.TextInput;
 
-public class PlaceholderTextArea extends TextArea{
+public class PlaceholderTextInput extends TextInput{
     private var _placeHolder:String = 'placeholder';
 
     public function get placeHolder():String {
@@ -36,12 +36,20 @@ public class PlaceholderTextArea extends TextArea{
         }
         super.focusOutHandler(event);
     }
+    override public function set text(value:String):void{
+        if(value != placeHolder){
+            this.setInputTextStyle('normal','0x131313');
+        }
+        super.text = value;
+    }
+
     override public function get text():String{
         if(textDisplay.text == placeHolder)
             textDisplay.text = "";
 
         return super.text;
     }
+
     private function setInputTextStyle(fontStyle:String, color:String):void {
         this.setStyle('fontStyle',fontStyle);
         this.setStyle('color',color);

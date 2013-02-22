@@ -7,18 +7,38 @@
     <s:titleContent><s:Label>Add Posts</s:Label></s:titleContent>
 
     <fx:Script><![CDATA[
+        import components.loadscreen.LoadScreen;
+
         import mx.collections.ArrayCollection;
         import mx.events.FlexEvent;
+
         import spark.events.IndexChangeEvent;
 
         [Bindable(event='change')]
         private var posts:ArrayCollection = new ArrayCollection();
+        private var alert:LoadScreen;
+        private var timer:uint;
+
 
         private function addPostButtonHandler(event:Event):void {
             navigator.pushView(CreatePostScreen);
         }
+
         private function gestureButtonHandler(event:Event):void {
             navigator.pushView(GestureScreen);
+        }
+
+        private function popupButtonButtonHandler(event:Event):void {
+            alert = new LoadScreen();
+            alert.width = navigator.width;
+            alert.height = navigator.height;
+            alert.open(this, true);
+            timer = setInterval(closePopup, 2000);
+        }
+
+        private function closePopup():void {
+            clearInterval(timer);
+            alert.close();
         }
 
         private function list_clickHandler(event:IndexChangeEvent):void {
@@ -39,6 +59,7 @@
         ]]></fx:Script>
 
     <s:List id="list" dataProvider="{posts}" width="100%" height="100%" labelField="title" change="list_clickHandler(event)"/>
-    <s:Button id="addPostButton"  label="Create new post" touchTap="addPostButtonHandler(event)" click="addPostButtonHandler(event)" width="100%"/>
+    <s:Button interactionMode="touch" id="addPostButton"  label="Create new post" touchTap="addPostButtonHandler(event)" click="addPostButtonHandler(event)" width="100%"/>
     <s:Button id="gestureButton"  label="Test Gestures" touchTap="gestureButtonHandler(event)" click="gestureButtonHandler(event)" width="100%"/>
+    <s:Button id="popupButton"  label="Wait 2 seconds" touchTap="popupButtonButtonHandler(event)" click="popupButtonButtonHandler(event)" width="100%"/>
 </s:View>
